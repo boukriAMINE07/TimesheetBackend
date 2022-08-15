@@ -11,6 +11,6 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project,Long> {
 
     List<Project> findByNameEquals(String name);
-    Page<Project> findAll(Pageable pageable);
-    Page<Project> findByNameContaining(String name, Pageable pageable);
+    Page<Project> findAllByOrderByIdDesc(Pageable pageable);
+    Page<Project> findByNameContainingOrderByIdDesc(String name, Pageable pageable);
 }

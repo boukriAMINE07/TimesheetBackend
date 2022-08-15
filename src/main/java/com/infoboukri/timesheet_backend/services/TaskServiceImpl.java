@@ -52,13 +52,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> getAllTaskWithPage(int page, int size) {
-        Page<Task> pageTasks=taskRepository.findAll(PageRequest.of(page, size));
+        Page<Task> pageTasks=taskRepository.findAllByOrderByIdDesc(PageRequest.of(page, size));
         return pageTasks;
     }
 
     @Override
     public Page<Task> getAllTaskWithNameAndPage(String name, int page, int size) {
-        Page<Task> pageTasks=taskRepository.findByNameContaining(name,PageRequest.of(page, size));
+        Page<Task> pageTasks=taskRepository.findByNameContainingOrderByIdDesc(name,PageRequest.of(page, size));
         return pageTasks;
     }
 }

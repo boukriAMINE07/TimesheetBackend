@@ -16,7 +16,7 @@ import java.util.List;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long project_id;
+    private Long id;
     private String name;
     private String description;
     @Temporal(TemporalType.DATE)

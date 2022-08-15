@@ -53,14 +53,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Page<Project> getAllProjectWithPage(int page, int size) {
-        Page<Project> pageProjects=projectRepository.findAll(PageRequest.of(page, size));
+        Page<Project> pageProjects=projectRepository.findAllByOrderByIdDesc(PageRequest.of(page, size));
 
         return pageProjects;
     }
 
     @Override
     public Page<Project> getAllProjectWithNameAndPage(String name, int page, int size) {
-        Page<Project> pageProjects=projectRepository.findByNameContaining(name,PageRequest.of(page, size));
+        Page<Project> pageProjects=projectRepository.findByNameContainingOrderByIdDesc(name,PageRequest.of(page, size));
         return pageProjects;
     }
 }

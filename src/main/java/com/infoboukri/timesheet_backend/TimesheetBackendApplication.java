@@ -35,17 +35,7 @@ public class TimesheetBackendApplication {
                                         ConsultantService consultantService,
                                         TaskOfConsultantService taskOfConsultantService, UserRepository userRepository, UserService userService, RoleRepository roleRepository){
         return args -> {
-         /*   Role role = new Role();
-            role.setName(ERole.ROLE_ADMIN);
-            roleRepository.save(role);
-            Set<Role> roles = new HashSet<Role>();
-            roles.add(role);
-            User user=new User();
-            user.setEmail("hanane@gmail.com");
-            user.setPassword("1234");
-            user.setUsername("hanane");
-            user.setRoles(roles);
-           userService.SaveUser(user);*/
+
 
             Stream.of("project 1","project 2","project 3").forEach(project->{
                 Project projectSaved=new Project();
@@ -75,15 +65,17 @@ public class TimesheetBackendApplication {
 
                //consultantService.saveConsultant(consultant);
             });
-            /*Stream.of("Boukri","Abdo","Hanane").forEach(name->{
-                User user=new User();
-                user.setUsername(name);
-                user.setEmail(name+"@gmail.com");
-                user.setPassword(name);
 
-            });*/
-            //Consultant consultant=consultantService.getConsultant(2L);
+            User user=userRepository.findById(1L).orElseThrow(()->new UserNotFoundException("user by Id : 2 Not Found"));
+            taskService.allTask().forEach(task -> {
+                TaskOfConsultant taskOfConsultant = new TaskOfConsultant();
+                taskOfConsultant.setUser(user);
+                taskOfConsultant.setTask(task);
+                taskOfConsultant.setDuration((int) (Math.random() * 900));
+                taskOfConsultant.setState(Math.random() > 0.5 ? State.PROGRESSE : State.DONE);
+               // taskOfConsultantService.saveTaskOfConsultant(taskOfConsultant);
 
+            });
 
 
 

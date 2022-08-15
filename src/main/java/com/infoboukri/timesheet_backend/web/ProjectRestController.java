@@ -40,7 +40,7 @@ public class ProjectRestController {
 
     @PutMapping("/projects/{project_id}")
     public Project updateProject(@PathVariable Long project_id,@RequestBody Project project){
-        project.setProject_id(project_id);
+        project.setId(project_id);
         return projectService.updateProject(project);
     }
     @PatchMapping(value = "/projects/{project_id}")

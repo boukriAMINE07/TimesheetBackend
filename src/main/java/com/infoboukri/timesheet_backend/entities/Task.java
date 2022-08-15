@@ -15,7 +15,7 @@ import java.util.List;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long task_id;
+    private Long id;
     private String name;
     private String description;
     @ManyToOne
