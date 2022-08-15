@@ -41,10 +41,24 @@ public class TaskOfConsultantRestController {
         return taskOfConsultantService.getTaskOfConsultantByTask_Name(task);
     }
     @GetMapping("/taskOfConsultant/searchConsultant")
-    public List<TaskOfConsultant> getTaskOfConsultantByconsultantName(@RequestParam(name = "consultant",defaultValue = "") String consultant)  {
-        return taskOfConsultantService.getTaskOfConsultantByConsultant_Name(consultant);
-    }
+    public ResponseEntity<Map<String,Object>> getTaskOfConsultantByconsultantName(  @RequestParam(name = "consultant",defaultValue = "") String consultant
+            ,@RequestParam(name = "page",defaultValue = "0") int page,
+                                                                                    @RequestParam(name = "size",defaultValue = "5") int size){
+        try {
+            List<TaskOfConsultant> taskOfConsultants = new ArrayList<TaskOfConsultant>();
+            Page<TaskOfConsultant> pageTaskOfConsultants= taskOfConsultantService.getTaskOfConsultantByConsultant_Name(consultant,page, size);
 
+            taskOfConsultants = pageTaskOfConsultants.getContent();
+            Map<String,Object> response=new HashMap<>();
+            response.put("taskOfConsultants",taskOfConsultants);
+            response.put("currentPage",pageTaskOfConsultants.getNumber());
+            response.put("totalItems",pageTaskOfConsultants.getTotalElements());
+            response.put("totalPages",pageTaskOfConsultants.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PostMapping("/taskOfConsultant")
     public TaskOfConsultant saveTaskOfConsultant(@RequestBody TaskOfConsultant taskOfConsultant){
         return taskOfConsultantService.saveTaskOfConsultant(taskOfConsultant);
@@ -62,7 +76,7 @@ public class TaskOfConsultantRestController {
     }
 
     @PatchMapping(value = "/taskOfConsultant/{id}")
-    public ResponseEntity<TaskOfConsultant> updateTotalHoursTaskOfProject(@PathVariable Long id, @RequestBody Map<Object,Long> fields) throws TaskOfConsultantNotFoundException {
+    public ResponseEntity<TaskOfConsultant> updateTotalHoursTaskOfProject(@PathVariable Long id, @RequestBody Map<Object,Integer> fields) throws TaskOfConsultantNotFoundException {
         TaskOfConsultant taskOfConsultant=taskOfConsultantService.getTaskOfConsultant(id);
         if (taskOfConsultant!=null){
             fields.forEach((key,value)->{

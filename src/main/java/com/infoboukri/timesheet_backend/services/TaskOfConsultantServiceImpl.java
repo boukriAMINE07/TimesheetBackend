@@ -43,8 +43,8 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
     }
 
     @Override
-    public List<TaskOfConsultant> getTaskOfConsultantByConsultant_Name(String consultantName) {
-        return taskOfConsultantRepository.findTaskOfConsultantByUserUsernameEquals(consultantName);
+    public Page<TaskOfConsultant> getTaskOfConsultantByConsultant_Name(String consultantName,int page, int size) {
+        return taskOfConsultantRepository.findTaskOfConsultantByUserUsernameEqualsOrderByIdDesc(consultantName,PageRequest.of(page, size));
     }
 
     @Override
@@ -59,14 +59,14 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
 
     @Override
     public Page<TaskOfConsultant> getAllTaskOfConsultantWithPage(int page, int size) {
-        Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.findAll(PageRequest.of(page, size));
+        Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.findAllByOrderByIdDesc(PageRequest.of(page, size));
         return pageTaskOfConsultants;
     }
 
     @Override
     public Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndPage(String name, int page, int size) {
         Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
-                findTaskOfConsultantByUserUsernameContaining(name,PageRequest.of(page, size));
+                findTaskOfConsultantByUserUsernameContainingOrderByIdDesc(name,PageRequest.of(page, size));
 
         return pageTaskOfConsultants;
     }

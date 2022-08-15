@@ -45,7 +45,7 @@ public class TaskRestController {
     }
     @PutMapping("/tasks/{task_id}")
     public Task updateTask(@PathVariable Long task_id,@RequestBody Task task){
-        task.setTask_id(task_id);
+        task.setId(task_id);
         return taskService.updateTask(task);
     }
     @DeleteMapping("/tasks/{task_id}")

@@ -11,8 +11,8 @@ import java.util.List;
 public interface TaskOfConsultantRepository extends JpaRepository<TaskOfConsultant,Long> {
 
     List<TaskOfConsultant> findTaskOfConsultantByTaskNameEquals(String taskName);
-    List<TaskOfConsultant> findTaskOfConsultantByUserUsernameEquals(String consultantName);
-    Page<TaskOfConsultant> findAll(Pageable pageable);
-    Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameContaining(String name, Pageable pageable);
+    Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameEqualsOrderByIdDesc(String consultantName,Pageable pageable);
+    Page<TaskOfConsultant> findAllByOrderByIdDesc(Pageable pageable);
+    Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameContainingOrderByIdDesc(String name, Pageable pageable);
 
 }
