@@ -44,7 +44,7 @@ public class TimesheetBackendApplication {
                 projectSaved.setTotalHours((int) (Math.random()*1000));
                 projectSaved.setStartDate(new Date());
                 projectSaved.setEndDate(new Date());
-               // projectService.saveProject(projectSaved);
+                //projectService.saveProject(projectSaved);
             });
             projectService.allProject().forEach(project -> {
             Stream.of("coding","deployment","correction bug").forEach(name->{
@@ -52,7 +52,7 @@ public class TimesheetBackendApplication {
                 task.setName(name);
                 task.setDescription(name+" Description");
                 task.setProject(project);
-               //taskService.saveTask(task);
+                //taskService.saveTask(task);
             });
             });
 
@@ -73,7 +73,7 @@ public class TimesheetBackendApplication {
                 taskOfConsultant.setTask(task);
                 taskOfConsultant.setDuration((int) (Math.random() * 900));
                 taskOfConsultant.setState(Math.random() > 0.5 ? State.PROGRESSE : State.DONE);
-               // taskOfConsultantService.saveTaskOfConsultant(taskOfConsultant);
+                taskOfConsultantService.saveTaskOfConsultant(taskOfConsultant);
 
             });
 

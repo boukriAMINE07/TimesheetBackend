@@ -1,6 +1,4 @@
 package com.infoboukri.timesheet_backend.web;
-
-
 import com.infoboukri.timesheet_backend.dto.UserDto;
 import com.infoboukri.timesheet_backend.entities.Consultant;
 import com.infoboukri.timesheet_backend.entities.TaskOfConsultant;
@@ -44,10 +42,6 @@ public class UserRestController {
     public User getUserById(@PathVariable Long id) throws UserNotFoundException {
         return userService.getUser(id);
     }
-    @PostMapping("/users")
-    public User saveUser(@RequestBody User user){
-        return userService.SaveUser(user);
-    }
     @PutMapping("/users/{id}")
     public User updateUser(@PathVariable Long id,@RequestBody User user){
         user.setId(id);
@@ -69,8 +63,8 @@ public class UserRestController {
             userService.SaveUser(user);
         }
         return user;
-
     }
+
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deletetUser(id);
