@@ -3,6 +3,7 @@ package com.infoboukri.timesheet_backend.web;
 import com.infoboukri.timesheet_backend.entities.Project;
 import com.infoboukri.timesheet_backend.entities.Task;
 import com.infoboukri.timesheet_backend.exceptions.TaskNotFoundException;
+import com.infoboukri.timesheet_backend.repositories.TaskRepository;
 import com.infoboukri.timesheet_backend.services.TaskService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -22,6 +20,7 @@ import java.util.Map;
 @CrossOrigin("*")
 public class TaskRestController {
     private TaskService taskService;
+    private TaskRepository taskRepository;
 
 
     @GetMapping("/tasks")
