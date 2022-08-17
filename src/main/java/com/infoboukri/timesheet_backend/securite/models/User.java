@@ -33,6 +33,7 @@ public class User {
   @Size(max = 50)
   @Email
   private String email;
+  private Long phone;
 
   @NotBlank
   @Size(max = 120)
@@ -50,12 +51,18 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password,Long phone) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.phone=phone;
   }
-
+  public Long getPhone(){
+    return phone;
+  }
+  public void setPhone(Long phone){
+    this.phone=phone;
+  }
   public Long getId() {
     return id;
   }

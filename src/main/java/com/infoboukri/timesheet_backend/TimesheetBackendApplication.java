@@ -17,6 +17,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,10 +32,14 @@ public class TimesheetBackendApplication {
 
     @Bean
     CommandLineRunner commandLineRunner(ProjectService projectService
-                                        , TaskService taskService,
+            , TaskService taskService,
                                         ConsultantService consultantService,
                                         TaskOfConsultantService taskOfConsultantService, UserRepository userRepository, UserService userService, RoleRepository roleRepository){
         return args -> {
+
+
+
+
 
 
             Stream.of("project 1","project 2","project 3").forEach(project->{
@@ -44,16 +49,26 @@ public class TimesheetBackendApplication {
                 projectSaved.setTotalHours((int) (Math.random()*1000));
                 projectSaved.setStartDate(new Date());
                 projectSaved.setEndDate(new Date());
-                //projectService.saveProject(projectSaved);
+                // projectService.saveProject(projectSaved);
             });
             projectService.allProject().forEach(project -> {
-            Stream.of("coding","deployment","correction bug").forEach(name->{
-                Task task=new Task();
-                task.setName(name);
-                task.setDescription(name+" Description");
-                task.setProject(project);
-                //taskService.saveTask(task);
-            });
+                Stream.of("coding","deployment","correction bug").forEach(name->{
+
+                    for(int i=0;i<=4;i++){
+                        Task task=new Task();
+                        task.setName(name);
+                        task.setDescription(name+" Description");
+                        task.setProject(project);
+                        Date dt = new Date();
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(dt);
+                        c.add(Calendar.DATE, i);
+                        dt = c.getTime();
+
+                      //    taskService.saveTask(task);
+                    }
+
+                });
             });
 
             Stream.of("Boukri","AbouFalah","Elmtougui").forEach(name->{
@@ -63,19 +78,17 @@ public class TimesheetBackendApplication {
                 consultant.setPassword(name);
                 consultant.setPhone(63339393L);
 
-               //consultantService.saveConsultant(consultant);
+                //consultantService.saveConsultant(consultant);
             });
+            /*Stream.of("Boukri","Abdo","Hanane").forEach(name->{
+                User user=new User();
+                user.setUsername(name);
+                user.setEmail(name+"@gmail.com");
+                user.setPassword(name);
 
-            User user=userRepository.findById(1L).orElseThrow(()->new UserNotFoundException("user by Id : 2 Not Found"));
-            taskService.allTask().forEach(task -> {
-                TaskOfConsultant taskOfConsultant = new TaskOfConsultant();
-                taskOfConsultant.setUser(user);
-                taskOfConsultant.setTask(task);
-                taskOfConsultant.setDuration((int) (Math.random() * 900));
-                taskOfConsultant.setState(Math.random() > 0.5 ? State.PROGRESSE : State.DONE);
-                taskOfConsultantService.saveTaskOfConsultant(taskOfConsultant);
+            });*/
+            //Consultant consultant=consultantService.getConsultant(2L);
 
-            });
 
 
 

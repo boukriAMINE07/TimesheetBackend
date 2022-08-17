@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,8 @@ public class Task {
     private Long id;
     private String name;
     private String description;
+    @Temporal(TemporalType.DATE)
+
     @ManyToOne
     private Project project;
     @OneToMany(mappedBy = "task")
