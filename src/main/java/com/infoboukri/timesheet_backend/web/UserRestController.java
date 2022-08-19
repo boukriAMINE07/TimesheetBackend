@@ -59,6 +59,10 @@ public class UserRestController {
             user.setUsername(userDto.getUsername());
             needUpdate = true;
         }
+        if(userDto.getPhone()!=null){
+            user.setPhone(userDto.getPhone());
+            needUpdate = true;
+        }
         if (needUpdate){
             userService.SaveUser(user);
         }

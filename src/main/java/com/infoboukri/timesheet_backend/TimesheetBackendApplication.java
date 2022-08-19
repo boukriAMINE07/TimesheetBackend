@@ -51,35 +51,19 @@ public class TimesheetBackendApplication {
                 projectSaved.setEndDate(new Date());
                 // projectService.saveProject(projectSaved);
             });
+
             projectService.allProject().forEach(project -> {
                 Stream.of("coding","deployment","correction bug").forEach(name->{
-
-                    for(int i=0;i<=4;i++){
-                        Task task=new Task();
-                        task.setName(name);
-                        task.setDescription(name+" Description");
-                        task.setProject(project);
-                        Date dt = new Date();
-                        Calendar c = Calendar.getInstance();
-                        c.setTime(dt);
-                        c.add(Calendar.DATE, i);
-                        dt = c.getTime();
-
-                      //    taskService.saveTask(task);
-                    }
-
+                    Task task=new Task();
+                    task.setName(name);
+                    task.setDescription(name+" Description");
+                    task.setProject(project);
+                    //taskService.saveTask(task);
                 });
             });
 
-            Stream.of("Boukri","AbouFalah","Elmtougui").forEach(name->{
-                Consultant consultant=new Consultant();
-                consultant.setName(name);
-                consultant.setEmail(name+"@gmail.com");
-                consultant.setPassword(name);
-                consultant.setPhone(63339393L);
 
-                //consultantService.saveConsultant(consultant);
-            });
+
             /*Stream.of("Boukri","Abdo","Hanane").forEach(name->{
                 User user=new User();
                 user.setUsername(name);

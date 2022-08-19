@@ -23,6 +23,7 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
 
     @Override
     public TaskOfConsultant saveTaskOfConsultant(TaskOfConsultant taskOfConsultant) {
+       
         return taskOfConsultantRepository.save(taskOfConsultant);
     }
 
@@ -48,6 +49,11 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
     }
 
     @Override
+    public List<TaskOfConsultant> getTaskOfConsultantByConsultant_Name(String consultant_Name) {
+        return taskOfConsultantRepository.findTaskOfConsultantByUserUsernameEquals(consultant_Name);
+    }
+
+    @Override
     public TaskOfConsultant updateTaskOfConsultant(TaskOfConsultant taskOfConsultant) {
         return taskOfConsultantRepository.save(taskOfConsultant);
     }
@@ -68,6 +74,13 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
         Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
                 findTaskOfConsultantByUserUsernameContainingOrderByIdDesc(name,PageRequest.of(page, size));
 
+        return pageTaskOfConsultants;
+    }
+
+    @Override
+    public Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndPage(String name, String taskName, int page, int size) {
+        Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
+                findTaskOfConsultantByUserUsernameEqualsAndTaskNameContainingOrderByIdDesc(name,taskName,PageRequest.of(page, size));
         return pageTaskOfConsultants;
     }
 }
