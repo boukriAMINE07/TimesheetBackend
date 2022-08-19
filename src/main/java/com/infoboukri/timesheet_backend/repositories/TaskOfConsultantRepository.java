@@ -12,6 +12,8 @@ public interface TaskOfConsultantRepository extends JpaRepository<TaskOfConsulta
 
     List<TaskOfConsultant> findTaskOfConsultantByTaskNameEquals(String taskName);
     Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameEqualsOrderByIdDesc(String consultantName,Pageable pageable);
+    Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameEqualsAndTaskNameContainingOrderByIdDesc(String consultantName,String taskName,Pageable pageable);
+    List<TaskOfConsultant> findTaskOfConsultantByUserUsernameEquals(String consultantName);
     Page<TaskOfConsultant> findAllByOrderByIdDesc(Pageable pageable);
     Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameContainingOrderByIdDesc(String name, Pageable pageable);
 

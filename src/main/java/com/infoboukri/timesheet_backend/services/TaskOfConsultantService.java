@@ -13,8 +13,11 @@ public interface TaskOfConsultantService {
     TaskOfConsultant getTaskOfConsultant(Long taskOfConsultantId) throws TaskOfConsultantNotFoundException;
     List<TaskOfConsultant> getTaskOfConsultantByTask_Name(String task_Name);
     Page<TaskOfConsultant> getTaskOfConsultantByConsultant_Name(String consultant_Name,int page, int size);
+    List<TaskOfConsultant> getTaskOfConsultantByConsultant_Name(String consultant_Name);
     TaskOfConsultant updateTaskOfConsultant(TaskOfConsultant taskOfConsultant);
     void deleteTaskOfConsultant(Long taskOfConsultantId);
     Page<TaskOfConsultant> getAllTaskOfConsultantWithPage(int page, int size);
     Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndPage(String name,int page, int size);
+    Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndPage(String name,String taskName,int page, int size);
+
 }

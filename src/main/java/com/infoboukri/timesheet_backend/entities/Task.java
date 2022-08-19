@@ -19,7 +19,6 @@ public class Task {
     private Long id;
     private String name;
     private String description;
-    @Temporal(TemporalType.DATE)
 
     @ManyToOne
     private Project project;
