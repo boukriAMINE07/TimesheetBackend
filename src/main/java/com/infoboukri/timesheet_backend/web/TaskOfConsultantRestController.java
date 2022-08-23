@@ -15,10 +15,10 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -46,7 +46,7 @@ public class TaskOfConsultantRestController {
     }
     @GetMapping("/taskOfConsultant/searchConsultant")
     public ResponseEntity<Map<String,Object>> getTaskOfConsultantByConsultantNameAndPage(  @RequestParam(name = "consultant",defaultValue = "") String consultant
-            ,@RequestParam(name = "page",defaultValue = "0") int page,
+                                                                             ,@RequestParam(name = "page",defaultValue = "0") int page,
                                                                                            @RequestParam(name = "size",defaultValue = "5") int size){
         try {
             List<TaskOfConsultant> taskOfConsultants = new ArrayList<TaskOfConsultant>();
@@ -124,7 +124,7 @@ public class TaskOfConsultantRestController {
     }
 
     @GetMapping("/taskOfConsultant/pageTaskOfConsultants")
-    public ResponseEntity<Map<String,Object>> listPageProject(  @RequestParam(required = false) String name
+    public ResponseEntity<Map<String,Object>> listPageTask(  @RequestParam(required = false) String name
             ,@RequestParam(name = "page",defaultValue = "0") int page,
                                                                 @RequestParam(name = "size",defaultValue = "5") int size){
         try {
@@ -171,5 +171,42 @@ public class TaskOfConsultantRestController {
 
     }
 
+    @GetMapping("/taskOfConsultant/searchByProject")
+    public List<TaskOfConsultant> listTaskOfConsultantByProject(@RequestParam(required = false) String name){
+        return taskOfConsultantService.getAllTaskOfConsultantByProjectName(name);
+    }
+
+    @GetMapping("/taskOfConsultant/pageTaskOfConsultantsByDate")
+    public ResponseEntity<Map<String,Object>> listPageTaskByDate(  @RequestParam(required = false) String name,
+                                                                   @RequestParam(required = false) String start,
+                                                                   @RequestParam(required = false) String end
+                                                              ,@RequestParam(name = "page",defaultValue = "0") int page,
+                                                                @RequestParam(name = "size",defaultValue = "5") int size){
+        try {
+            List<TaskOfConsultant> taskOfConsultants = new ArrayList<TaskOfConsultant>();
+            Page<TaskOfConsultant> pageTaskOfConsultants ;
+            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd", Locale.ENGLISH);
+            if (name==null && start==null && end==null){
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithPage(page, size);
+            }else if (start==null && end==null){
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndPage(name,page, size);
+            }
+            else if(end==null){
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndDateAndPage(name, formatter.parse(start),page, size);
+            }
+            else{
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndDateBetweenAndPage(name, formatter.parse(start),formatter.parse(end),page, size);
+            }
+            taskOfConsultants = pageTaskOfConsultants.getContent();
+            Map<String,Object> response=new HashMap<>();
+            response.put("taskOfConsultants",taskOfConsultants);
+            response.put("currentPage",pageTaskOfConsultants.getNumber());
+            response.put("totalItems",pageTaskOfConsultants.getTotalElements());
+            response.put("totalPages",pageTaskOfConsultants.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

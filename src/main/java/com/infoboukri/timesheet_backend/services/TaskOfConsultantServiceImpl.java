@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,7 +24,7 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
 
     @Override
     public TaskOfConsultant saveTaskOfConsultant(TaskOfConsultant taskOfConsultant) {
-       
+
         return taskOfConsultantRepository.save(taskOfConsultant);
     }
 
@@ -81,6 +82,27 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
     public Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndPage(String name, String taskName, int page, int size) {
         Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
                 findTaskOfConsultantByUserUsernameEqualsAndTaskNameContainingOrderByIdDesc(name,taskName,PageRequest.of(page, size));
+        return pageTaskOfConsultants;
+    }
+
+    @Override
+    public List<TaskOfConsultant> getAllTaskOfConsultantByProjectName(String name) {
+        List<TaskOfConsultant> taskOfConsultants=taskOfConsultantRepository.findTaskOfConsultantByTaskProjectNameEquals(name);
+        return taskOfConsultants;
+    }
+
+    @Override
+    public Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndDateAndPage(String name, Date date, int page, int size) {
+
+        Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
+                findTaskOfConsultantByUserUsernameEqualsAndStartDateAfterOrderByIdDesc(name,date,PageRequest.of(page, size));
+        return pageTaskOfConsultants;
+    }
+
+    @Override
+    public Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndDateBetweenAndPage(String name, Date start, Date end, int page, int size) {
+        Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
+                findTaskOfConsultantByUserUsernameAndAndDateBetween(name,start,end,PageRequest.of(page, size));
         return pageTaskOfConsultants;
     }
 }
