@@ -5,6 +5,7 @@ import com.infoboukri.timesheet_backend.entities.TaskOfConsultant;
 import com.infoboukri.timesheet_backend.exceptions.TaskOfConsultantNotFoundException;
 import org.springframework.data.domain.Page;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TaskOfConsultantService {
@@ -19,5 +20,10 @@ public interface TaskOfConsultantService {
     Page<TaskOfConsultant> getAllTaskOfConsultantWithPage(int page, int size);
     Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndPage(String name,int page, int size);
     Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndPage(String name,String taskName,int page, int size);
+    List<TaskOfConsultant> getAllTaskOfConsultantByProjectName(String name);
+    Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndDateAndPage(String name, Date date, int page, int size);
+    Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndDateBetweenAndPage(String name, Date start,Date end, int page, int size);
+
+
 
 }

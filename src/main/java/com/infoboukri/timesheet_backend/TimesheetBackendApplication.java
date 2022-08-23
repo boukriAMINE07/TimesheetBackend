@@ -42,7 +42,7 @@ public class TimesheetBackendApplication {
 
 
 
-            Stream.of("project 1","project 2","project 3").forEach(project->{
+            Stream.of("Mecha","Breeze","Synergy").forEach(project->{
                 Project projectSaved=new Project();
                 projectSaved.setName(project);
                 projectSaved.setDescription(project+" Description");
@@ -58,7 +58,7 @@ public class TimesheetBackendApplication {
                     task.setName(name);
                     task.setDescription(name+" Description");
                     task.setProject(project);
-                    //taskService.saveTask(task);
+                  //  taskService.saveTask(task);
                 });
             });
 
@@ -72,7 +72,18 @@ public class TimesheetBackendApplication {
 
             });*/
             //Consultant consultant=consultantService.getConsultant(2L);
+            //User user=userRepository.findById(3L).orElseThrow(()->new UserNotFoundException("User By Id: 3 Not Found"));
+            taskService.allTask().forEach(task -> {
+                TaskOfConsultant taskOfConsultant=new TaskOfConsultant();
+               // taskOfConsultant.setUser(user);
+                taskOfConsultant.setTask(task);
+                taskOfConsultant.setDuration((int) (Math.random()*900));
+                taskOfConsultant.setStartDate(new Date());
+                taskOfConsultant.setEndDate(new Date());
+                taskOfConsultant.setState(Math.random()>0.5? State.PROGRESSE:State.DONE);
 
+                //taskOfConsultantService.saveTaskOfConsultant(taskOfConsultant);
+            });
 
 
 
