@@ -178,6 +178,7 @@ public class TaskOfConsultantRestController {
 
     @GetMapping("/taskOfConsultant/pageTaskOfConsultantsByDate")
     public ResponseEntity<Map<String,Object>> listPageTaskByDate(  @RequestParam(required = false) String name,
+                                                                   @RequestParam(name="task",required = false) String task,
                                                                    @RequestParam(required = false) String start,
                                                                    @RequestParam(required = false) String end
                                                               ,@RequestParam(name = "page",defaultValue = "0") int page,
@@ -186,16 +187,23 @@ public class TaskOfConsultantRestController {
             List<TaskOfConsultant> taskOfConsultants = new ArrayList<TaskOfConsultant>();
             Page<TaskOfConsultant> pageTaskOfConsultants ;
             SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd", Locale.ENGLISH);
-            if (name==null && start==null && end==null){
+            if (name==null && task==null && start==null && end==null){
                 pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithPage(page, size);
-            }else if (start==null && end==null){
+
+            }else if (task==null && start==null && end==null){
                 pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndPage(name,page, size);
             }
-            else if(end==null){
+            else if ( start==null && end==null){
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndPage(name,task,page, size);
+            } else if(task==null && end==null){
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndDateAndPage(name, formatter.parse(start),page, size);
+            } else if(task==null){
                 pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndDateAndPage(name, formatter.parse(start),page, size);
             }
+
+
             else{
-                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndDateBetweenAndPage(name, formatter.parse(start),formatter.parse(end),page, size);
+                pageTaskOfConsultants= taskOfConsultantService.getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndDateBetweenAndPage(name, task,formatter.parse(start),formatter.parse(end),page, size);
             }
             taskOfConsultants = pageTaskOfConsultants.getContent();
             Map<String,Object> response=new HashMap<>();

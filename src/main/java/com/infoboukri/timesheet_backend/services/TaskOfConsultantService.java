@@ -23,6 +23,7 @@ public interface TaskOfConsultantService {
     List<TaskOfConsultant> getAllTaskOfConsultantByProjectName(String name);
     Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndDateAndPage(String name, Date date, int page, int size);
     Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndDateBetweenAndPage(String name, Date start,Date end, int page, int size);
+    Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndDateBetweenAndPage(String name,String task, Date start,Date end, int page, int size);
 
 
 

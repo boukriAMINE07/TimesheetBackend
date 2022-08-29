@@ -19,6 +19,8 @@ public interface TaskOfConsultantRepository extends JpaRepository<TaskOfConsulta
     Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameEqualsAndStartDateAfterOrderByIdDesc(String consultantName, Date dateBefore, Pageable pageable);
     @Query("select task from TaskOfConsultant task where task.user.username=:name and task.startDate>=:start and task.endDate<=:end")
     Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameAndAndDateBetween(@Param("name") String name,@Param("start") Date start,@Param("end") Date end, Pageable pageable);
+    @Query("select task from TaskOfConsultant task where task.user.username=:name and task.task.name LIKE '%:task' and task.startDate>=:start and task.endDate<=:end")
+    Page<TaskOfConsultant> findTaskOfConsultantByUserUsernameAndTaskNameAndDateBetween(@Param("name") String name,@Param("task") String task, @Param("start") Date start,@Param("end") Date end, Pageable pageable);
     List<TaskOfConsultant> findTaskOfConsultantByUserUsernameEquals(String consultantName);
     List<TaskOfConsultant> findTaskOfConsultantByTaskProjectNameEquals(String projectName);
     Page<TaskOfConsultant> findAllByOrderByIdDesc(Pageable pageable);
