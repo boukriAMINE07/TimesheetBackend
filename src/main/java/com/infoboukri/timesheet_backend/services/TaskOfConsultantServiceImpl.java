@@ -105,4 +105,11 @@ public class TaskOfConsultantServiceImpl implements TaskOfConsultantService {
                 findTaskOfConsultantByUserUsernameAndAndDateBetween(name,start,end,PageRequest.of(page, size));
         return pageTaskOfConsultants;
     }
+
+    @Override
+    public Page<TaskOfConsultant> getAllTaskOfConsultantWithNameOfConsultantAndTaskNameAndDateBetweenAndPage(String name, String task, Date start, Date end, int page, int size) {
+        Page<TaskOfConsultant> pageTaskOfConsultants=taskOfConsultantRepository.
+                findTaskOfConsultantByUserUsernameAndTaskNameAndDateBetween(name,task,start,end,PageRequest.of(page, size));
+        return pageTaskOfConsultants;
+    }
 }
